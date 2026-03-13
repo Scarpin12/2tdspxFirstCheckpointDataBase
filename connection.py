@@ -2,9 +2,10 @@ import os
 import oracledb
 
 def get_connection():
-    user = os.getenv("DB_USER")
-    password = os.getenv("DB_PASSWORD")
-    dsn = os.getenv("DB_DSN")
-
-    return oracledb.connect(user=user, password=password, dsn=dsn)
+    connection = oracledb.connect(
+        user = os.environ.get("DB_USER"),
+        password = os.environ.get("DB_PASSWORD"),
+        dsn = os.environ.get("DB_DSN")
+    )
+    return connection
 
