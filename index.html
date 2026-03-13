@@ -97,14 +97,12 @@
             const setorSelecionado = document.getElementById('setor').value;
             const divResultado = document.getElementById('resultado');
 
-            // Muda o botão para mostrar que está carregando
             const btn = document.querySelector('button');
             btn.innerText = "TRANSMITINDO...";
             btn.disabled = true;
 
             try {
-                // Comunicação com a sua API FastAPI
-                const resposta = await fetch('http://127.0.0.1:8000/processar', {
+                const resposta = await fetch('/processar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -115,7 +113,6 @@
 
                 const dados = await resposta.json();
 
-                // Mostra o resultado na tela
                 divResultado.style.display = 'block';
                 if (resposta.ok) {
                     divResultado.style.color = '#00ffcc';
@@ -129,7 +126,6 @@
                 divResultado.style.color = '#ff4c4c';
                 divResultado.innerText = "FALHA NA COMUNICAÇÃO: O servidor está rodando?";
             } finally {
-                // Volta o botão ao normal
                 btn.innerText = "TRANSMITIR ORDEM";
                 btn.disabled = false;
             }
