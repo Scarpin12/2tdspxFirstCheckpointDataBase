@@ -21,13 +21,11 @@ def processar_evento(dados: EventoRequest):
             v_evento VARCHAR2(30) := :evento;
             v_setor VARCHAR2(30) := :setor;
 
-            -- Cursor para buscar ativos do setor específico
             CURSOR c_ativos IS
                 SELECT id_ativo, preco_base
                 FROM TB_ATIVOS_GALACTICOS
                 WHERE setor = v_setor;
         BEGIN
-            -- Definindo o fator baseado na estória de Kepler-186f
             IF v_evento = 'RADIACAO' THEN
                 v_fator := 1.25; -- Preço sobe 25% pela escassez
             ELSIF v_evento = 'DESCOBERTA' THEN
@@ -36,7 +34,6 @@ def processar_evento(dados: EventoRequest):
                 v_fator := 1.0;
             END IF;
 
-            -- Loop para processar cada ativo do setor
             FOR r IN c_ativos LOOP
                 UPDATE TB_ATIVOS_GALACTICOS
                 SET preco_base = r.preco_base * v_fator
